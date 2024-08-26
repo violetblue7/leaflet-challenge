@@ -5,7 +5,7 @@ This JavaScript(js) code sets up an interactive map using Leaflet and integrates
 
 ### Deployment
 The deployed project can be view at:  
- [https://github.com/violetblue7/leaflet-challenge](https://github.com/violetblue7/leaflet-challenge)
+ [https://violetblue7.github.io/leaflet-challenge/](https://violetblue7.github.io/leaflet-challenge/)
 
 ### Code Explanation
 
