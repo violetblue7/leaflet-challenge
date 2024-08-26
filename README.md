@@ -1,7 +1,15 @@
 # leaflet-challenge
-Module 15 Mapping
+## Module 15 Mapping
 
-This JavaScript(js) code sets up an interactive map using Leaflet and integrates various data layers to visualize earthquake and tectonic plate information. Here’s a detailed breakdown of what each part of the code does:
+This JavaScript(js) code sets up an interactive map using Leaflet and integrates various data layers to visualize earthquake and tectonic plate information. 
+
+### Deployment
+The deployed project can be view at:  
+ [https://github.com/violetblue7/leaflet-challenge](https://github.com/violetblue7/leaflet-challenge)
+
+### Code Explanation
+
+Here’s a detailed breakdown of what each part of the code does:
 
 1. Initialize the Map
 javascript
