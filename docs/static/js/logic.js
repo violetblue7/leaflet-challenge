@@ -114,3 +114,31 @@ d3.json("https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_day.geojs
     });
 });
 
+// Create the legend control
+let legend = L.control({ position: "bottomright" });
+
+legend.onAdd = function() {
+    let div = L.DomUtil.create("div", "info legend");
+    let limits = [0, 10, 20, 30]; // Example limits
+    let colors = ["#ff0000", "#ff7f00", "#ffff00", "#7fff00"]; // Example colors
+    let labels = [];
+
+    // Add the minimum and maximum
+    let legendInfo = "<h4>Legend Title</h4>" +
+        "<div class=\"labels\">" +
+            "<div class=\"min\">" + limits[0] + "</div>" +
+            "<div class=\"max\">" + limits[limits.length - 1] + "</div>" +
+        "</div>";
+
+    div.innerHTML = legendInfo;
+
+    limits.forEach(function(limit, index) {
+        labels.push("<li style=\"background-color: " + colors[index] + "\"></li>");
+    });
+
+    div.innerHTML += "<ul>" + labels.join("") + "</ul>";
+    return div;
+};
+
+// Add the legend to the map
+legend.addTo(myMap);
