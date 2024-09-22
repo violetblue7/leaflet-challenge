@@ -122,10 +122,55 @@ d3.json: Fetches tectonic plates data in GeoJSON format.
 L.geoJSON(geoData, { style: ... }): Creates a GeoJSON layer with custom styling for tectonic plates.
 L.control.layers(baseLayers, overlayLayers).addTo(map): Adds a layer control to the map allowing users to toggle between base layers and overlay layers.
 
-Summary
+**Corrections**
+To add a legend box adding the Depth (range and color description)
+
+Update the legend.onAdd function: Modify the existing code to include explanations for each depth range.
+logic.js (javascript)
+
+// Create the legend control
+let legend = L.control({ position: "bottomright" });
+
+legend.onAdd = function() {
+    let div = L.DomUtil.create("div", "info legend");
+    let limits = [-10, 10, 30, 50, 70, 90]; // Depth limits
+    let labels = [];
+
+    // Add the title to the legend
+    let legendInfo = "<h4>Earthquake Depth (km)</h4>";
+    div.innerHTML = legendInfo;
+
+    // Loop through depth intervals and generate a label with a colored square and explanation
+    for (let i = 0; i < limits.length; i++) {
+        div.innerHTML +=
+            '<i style="background:' + getColor(limits[i] + 1) + '; width: 18px; height: 18px; display: inline-block; margin-right: 5px;"></i> ' +
+            limits[i] + (limits[i + 1] ? '&ndash;' + limits[i + 1] + ' km' : '+ km') +
+            '<span style="margin-left: 5px;">' + getExplanation(limits[i]) + '</span><br>'; // Add explanation
+    }
+
+    return div;
+};
+
+// Function to get explanation based on depth
+function getExplanation(depth) {
+    if (depth > 90) return "Very Deep";
+    if (depth > 70) return "Deep";
+    if (depth > 50) return "Moderately Deep";
+    if (depth > 30) return "Shallow";
+    if (depth > 10) return "Very Shallow";
+    if (depth > -10) return "Surface";
+    return "Unknown Depth";
+}
+Modification of the code included: 
+
+Color Boxes: Each depth range is represented with a colored square.
+Depth Range Labels: The ranges are displayed next to the color boxes.
+Explanations: A new getExplanation function provides descriptive labels based on the depth, giving users context on what each range represents.
+
+**Summary**
 The code initializes a Leaflet map, sets up base layers (street and topographic maps), and overlays earthquake data, including heatmaps, circle markers, and tectonic plates. It uses d3.json to fetch data, processes it into visual layers, and adds these layers to the map with interactive controls for user selection.
 
-References:
+**References:**
 DATA-PT-EAST-APRIL-041524/02-Homework/15-Mapping Profesor Alexande Booth
 Libraries and Technologies:
 Leaflet:
