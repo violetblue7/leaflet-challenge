@@ -120,22 +120,34 @@ let legend = L.control({ position: "bottomright" });
 
 legend.onAdd = function() {
     let div = L.DomUtil.create("div", "info legend");
-    let limits = [-10, 10, 30, 50, 70, 90]; // Example limits
+    let limits = [-10, 10, 30, 50, 70, 90]; // Depth limits
     let labels = [];
 
     // Add the title to the legend
     let legendInfo = "<h4>Earthquake Depth (km)</h4>";
     div.innerHTML = legendInfo;
 
-    // Loop through depth intervals and generate a label with a colored square
-    for (var i = 0; i < limits.length; i++) {
+    // Loop through depth intervals and generate a label with a colored square and explanation
+    for (let i = 0; i < limits.length; i++) {
         div.innerHTML +=
             '<i style="background:' + getColor(limits[i] + 1) + '; width: 18px; height: 18px; display: inline-block; margin-right: 5px;"></i> ' +
-            limits[i] + (limits[i + 1] ? '&ndash;' + limits[i + 1] + ' km<br>' : '+ km');
+            limits[i] + (limits[i + 1] ? '&ndash;' + limits[i + 1] + ' km' : '+ km') +
+            '<span style="margin-left: 5px;">' + getExplanation(limits[i]) + '</span><br>'; // Add explanation
     }
 
     return div;
 };
+
+// Function to get explanation based on depth
+function getExplanation(depth) {
+    if (depth > 90) return "Very Deep";
+    if (depth > 70) return "Deep";
+    if (depth > 50) return "Moderately Deep";
+    if (depth > 30) return "Shallow";
+    if (depth > 10) return "Very Shallow";
+    if (depth > -10) return "Surface";
+    return "Unknown Depth";
+}
 
 // Add the legend to the map
 legend.addTo(map);
