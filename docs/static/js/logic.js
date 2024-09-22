@@ -29,12 +29,13 @@ let overlayLayers = {};
 
 // Function to get color based on depth
 function getColor(depth) {
-    return depth > 90 ? '#d73027' :
-           depth > 70 ? '#fc8d59' :
-           depth > 50 ? '#fee08b' :
-           depth > 30 ? '#d9ef8b' :
-           depth > 10 ? '#91cf60' :
-                        '#1a9850';
+    return depth > 90 ? '#FF0000' :        
+           depth > 70 ? '#FF4500' :        
+           depth > 50 ? '#FF8C00' :         
+           depth > 30 ? '#FFD700' :         
+           depth > 10 ? '#9ACD32' :         
+           depth > -10 ? '#00FF7F' :       
+                        '#ADD8E6';         
 }
 
 // Function to get radius based on magnitude
@@ -119,26 +120,22 @@ let legend = L.control({ position: "bottomright" });
 
 legend.onAdd = function() {
     let div = L.DomUtil.create("div", "info legend");
-    let limits = [0, 10, 20, 30]; // Example limits
-    let colors = ["#ff0000", "#ff7f00", "#ffff00", "#7fff00"]; // Example colors
+    let limits = [-10, 10, 30, 50, 70, 90]; // Example limits
     let labels = [];
 
-    // Add the minimum and maximum
-    let legendInfo = "<h4>Legend Title</h4>" +
-        "<div class=\"labels\">" +
-            "<div class=\"min\">" + limits[0] + "</div>" +
-            "<div class=\"max\">" + limits[limits.length - 1] + "</div>" +
-        "</div>";
-
+    // Add the title to the legend
+    let legendInfo = "<h4>Earthquake Depth (km)</h4>";
     div.innerHTML = legendInfo;
 
-    limits.forEach(function(limit, index) {
-        labels.push("<li style=\"background-color: " + colors[index] + "\"></li>");
-    });
+    // Loop through depth intervals and generate a label with a colored square
+    for (var i = 0; i < limits.length; i++) {
+        div.innerHTML +=
+            '<i style="background:' + getColor(limits[i] + 1) + '; width: 18px; height: 18px; display: inline-block; margin-right: 5px;"></i> ' +
+            limits[i] + (limits[i + 1] ? '&ndash;' + limits[i + 1] + ' km<br>' : '+ km');
+    }
 
-    div.innerHTML += "<ul>" + labels.join("") + "</ul>";
     return div;
 };
 
 // Add the legend to the map
-legend.addTo(myMap);
+legend.addTo(map);
